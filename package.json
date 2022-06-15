@@ -1,0 +1,20 @@
+{
+  "name": "fluent-ffprobe",
+  "version": "1.4.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JijaProGamer/fluent-ffmpeg.git"
+  },
+  "author": "bloxxy213",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/JijaProGamer/fluent-ffmpeg/issues"
+  },
+  "homepage": "https://github.com/JijaProGamer/fluent-ffmpeg#readme",
+  "dependencies": {
+    "child_process": "^1.0.2"
+  }
+}
