@@ -1,7 +1,7 @@
-const fluent_ffmpeg = require('./index.js')
-fluent_ffmpeg.FFPROBE_PATH = "C:\\ffmpeg\\bin\\ffprobe.exe"
+const fluent_ffprobe = require('./index.js')
+fluent_ffprobe.FFPROBE_PATH = "C:\\ffmpeg\\bin\\ffprobe.exe"
 
-fluent_ffmpeg.get(`http://live.mycamtv.com/blowjob.m3u8`,"aspect")
+fluent_ffprobe.get(`http://live.mycamtv.com/blowjob.m3u8`,"vbitrate")
 .then((res) => {
     console.log(res)
 })

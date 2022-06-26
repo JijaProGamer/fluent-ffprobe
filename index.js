@@ -71,7 +71,7 @@ const functions = {
     },
     framerate: (path) => {
         return new Promise((resolve, reject) => {
-            call_ffprobe(`-v error -select_streams v -of default=noprint_wrappers=1:nokey=1 -show_entries stream=r_frame_rate`, path, "", 0, 0)
+            call_ffprobe(`-v error -select_streams v:0 -of default=noprint_wrappers=1:nokey=1 -show_entries stream=r_frame_rate`, path, "", 0, 0)
                 .then(res => {
                     let framerate_raw = res.split("/")
                     let framerate = parseFloat(parseInt(framerate_raw[0]) / parseInt(framerate_raw[1]))
@@ -84,14 +84,14 @@ const functions = {
         return new Promise((resolve, reject) => {
             call_ffprobe(`-v 0 -select_streams v:0 -show_entries stream=codec_name -of default=noprint_wrappers=1:nokey=1`, path, "", 0, 0)
                 .then(res => {
-                    resolve(res.trim().trim())
+                    resolve(res.split("\n")[1].trim())
                 })
                 .catch(err => reject(err))
         })
     },
     acodec: (path) => {
         return new Promise((resolve, reject) => {
-            call_ffprobe(`-v 0 -select_streams a -show_entries stream=index,codec_name,channels:stream_tags=language -of default=nk=1:nw=1`, path, "", 0, 0)
+            call_ffprobe(`-v 0 -select_streams a:0 -show_entries stream=index,codec_name,channels:stream_tags=language -of default=nk=1:nw=1`, path, "", 0, 0)
                 .then(res => {
                     resolve(res.split("\n")[1].trim())
                 })
@@ -103,6 +103,18 @@ const functions = {
             call_ffprobe(`-v error -select_streams v:0 -show_entries stream=width,height,sample_aspect_ratio,display_aspect_ratio -of json=c=1 `, path, "", 0, 0)
                 .then(res => {
                     resolve(JSON.parse(res).streams[0])
+                })
+                .catch(err => reject(err))
+        })
+    },
+    vbitrate: (path) => {
+        return new Promise((resolve, reject) => {
+            call_ffprobe(`-v error -select_streams v:0 -show_entries stream=width,height,duration,bit_rate -of default=noprint_wrappers=1 -print_format json -show_format`, path, "", 0)
+                .then(res => {
+                    console.log(2)
+                    let format = JSON.parse(res).format
+                    console.log(res)
+                    resolve(format)
                 })
                 .catch(err => reject(err))
         })
